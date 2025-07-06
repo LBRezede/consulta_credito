@@ -1,0 +1,51 @@
+<div class="search-container">
+  <h2>Consultar Créditos</h2>
+
+  <!-- Mensagem de erro -->
+  @if (error) {
+    <div class="error-message">
+      {{ error }}
+    </div>
+  }
+
+  <!-- Busca por Nfse -->
+  <form #nfseForm="ngForm" (ngSubmit)="buscarPorNfse()" class="search-form">
+    <label for="nfse">Nº Nfse</label>
+    <input id="nfse" [(ngModel)]="numeroNfse" name="numeroNfse" placeholder="Digite o número Nfse" required>
+    <button type="submit" [disabled]="!nfseForm.form.valid">Buscar por Nfse</button>
+  </form>
+
+  <!-- Busca por Número de Crédito -->
+  <form #creditoForm="ngForm" (ngSubmit)="buscarPorCredito()" class="search-form">
+    <label for="credito">Nº Crédito</label>
+    <input id="credito" [(ngModel)]="numeroCredito" name="numeroCredito" placeholder="Digite o número do crédito" required>
+    <button type="submit" [disabled]="!creditoForm.form.valid">Buscar por Crédito</button>
+  </form>
+
+  <!-- Resultados -->
+  @if (creditos && creditos.length > 0) {
+    <div class="results">
+      <h3>Resultados</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Número Crédito</th>
+            <th>Número Nfse</th>
+            <th>Data</th>
+            <th>Valor ISSQN</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (credito of creditos; track credito) {
+            <tr>
+              <td>{{credito.numeroCredito}}</td>
+              <td>{{credito.numeroNfse}}</td>
+              <td>{{credito.data | date:'dd/MM/yyyy'}}</td>
+              <td>{{credito.valorIssqn | currency:'BRL'}}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
